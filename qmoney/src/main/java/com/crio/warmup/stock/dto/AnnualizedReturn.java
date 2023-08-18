@@ -29,7 +29,7 @@ public class AnnualizedReturn {
 
   public static final Comparator<AnnualizedReturn> sortByAnnualizedReturns = new Comparator<AnnualizedReturn>(){
     public int compare(AnnualizedReturn ar1,AnnualizedReturn ar2){
-      return (int)(ar1.getAnnualizedReturn().compareTo(ar2.getAnnualizedReturn()));
+      return (int)(ar2.getAnnualizedReturn().compareTo(ar1.getAnnualizedReturn()));
     }
   };
 }

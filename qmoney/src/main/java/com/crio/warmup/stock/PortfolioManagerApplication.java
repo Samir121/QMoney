@@ -172,7 +172,7 @@ final static String TOKEN = "f97cd24323c2d3ac6227161812e4787c8ebe3e23";
     List<Candle> ans = Arrays.asList(stockStartToEnd);
     return ans;
   }
-  
+
 
   public static List<AnnualizedReturn> mainCalculateSingleReturn(String[] args)
       throws IOException, URISyntaxException {
@@ -180,6 +180,7 @@ final static String TOKEN = "f97cd24323c2d3ac6227161812e4787c8ebe3e23";
     // ObjectMapper objectMapper = getObjectMapper();
     List<PortfolioTrade> trades = readTradesFromJson(args[0]);
     LocalDate endDate = LocalDate.parse(args[1]);
+    System.out.println(trades);
     // RestTemplate restTemplate = new RestTemplate();
     List<AnnualizedReturn> annualizedReturns = new ArrayList<>();
     for(PortfolioTrade pt:trades){
@@ -198,6 +199,7 @@ final static String TOKEN = "f97cd24323c2d3ac6227161812e4787c8ebe3e23";
       }
     }
     Collections.sort(annualizedReturns,AnnualizedReturn.sortByAnnualizedReturns);
+    System.out.println(annualizedReturns);
     return annualizedReturns;
     // return Collections.emptyList();
   }
