@@ -4,6 +4,8 @@ package com.crio.warmup.stock;
 
 import com.crio.warmup.stock.dto.*;
 import com.crio.warmup.stock.log.UncaughtExceptionHandler;
+import com.crio.warmup.stock.portfolio.PortfolioManager;
+import com.crio.warmup.stock.portfolio.PortfolioManagerFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.File;
@@ -38,6 +40,9 @@ final static String TOKEN = "f97cd24323c2d3ac6227161812e4787c8ebe3e23";
   public static String getToken(){
     return TOKEN;
   }
+
+  public static RestTemplate restTemplate = new RestTemplate();
+  public static PortfolioManager portfolioManager = PortfolioManagerFactory.getPortfolioManager(restTemplate);
 
   // TODO: CRIO_TASK_MODULE_REST_API
   //  Find out the closing price of each stock on the end_date and return the list
@@ -237,14 +242,47 @@ final static String TOKEN = "f97cd24323c2d3ac6227161812e4787c8ebe3e23";
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+  // TODO: CRIO_TASK_MODULE_REFACTOR
+  //  Once you are done with the implementation inside PortfolioManagerImpl and
+  //  PortfolioManagerFactory, create PortfolioManager using PortfolioManagerFactory.
+  //  Refer to the code from previous modules to get the List<PortfolioTrades> and endDate, and
+  //  call the newly implemented method in PortfolioManager to calculate the annualized returns.
+
+  // Note:
+  // Remember to confirm that you are getting same results for annualized returns as in Module 3.
+
+  public static List<AnnualizedReturn> mainCalculateReturnsAfterRefactor(String[] args)
+      throws Exception {
+       File file = resolveFileFromResources(args[0]);
+       LocalDate endDate = LocalDate.parse(args[1]);
+      //  String contents = readFileAsString(file);
+       ObjectMapper objectMapper = getObjectMapper();
+       PortfolioTrade[] portfolioTrades = objectMapper.readValue(file,PortfolioTrade[].class);
+       return portfolioManager.calculateAnnualizedReturn(Arrays.asList(portfolioTrades), endDate);
+  }
+
+
   public static void main(String[] args) throws Exception {
     Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler());
     ThreadContext.put("runId", UUID.randomUUID().toString());
 
 
 
-    printJsonObject(mainCalculateSingleReturn(args));
+    // printJsonObject(mainCalculateSingleReturn(args));
 
+
+    printJsonObject(mainCalculateReturnsAfterRefactor(args));
   }
 }
 
