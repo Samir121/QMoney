@@ -72,6 +72,7 @@ final static String TOKEN = "f97cd24323c2d3ac6227161812e4787c8ebe3e23";
     for(TotalReturnsDto trd:tests){
       stocks.add(trd.getSymbol());
     }
+    // System.out.println(stocks);
     return stocks;
     //  return Collections.emptyList();
   }
@@ -174,8 +175,13 @@ final static String TOKEN = "f97cd24323c2d3ac6227161812e4787c8ebe3e23";
     String url = String.format("https://api.tiingo.com/tiingo/daily/%s/prices?" + "startDate=%s&endDate=%s&token=%s",
                                   trade.getSymbol(),trade.getPurchaseDate(),endDate,TOKEN);
     TiingoCandle[] stockStartToEnd = restTemplate.getForObject(url,TiingoCandle[].class);
-    List<Candle> ans = Arrays.asList(stockStartToEnd);
-    return ans;
+    if(stockStartToEnd == null){
+      return new ArrayList<Candle>();
+    }
+    else{
+      List<Candle> candleList = Arrays.asList(stockStartToEnd);
+      return candleList;
+    }
   }
 
 
@@ -204,7 +210,7 @@ final static String TOKEN = "f97cd24323c2d3ac6227161812e4787c8ebe3e23";
       }
     }
     Collections.sort(annualizedReturns,AnnualizedReturn.sortByAnnualizedReturns);
-    System.out.println(annualizedReturns);
+    // System.out.println(annualizedReturns);
     return annualizedReturns;
     // return Collections.emptyList();
   }
