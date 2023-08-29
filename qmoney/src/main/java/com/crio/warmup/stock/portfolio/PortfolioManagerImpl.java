@@ -93,6 +93,10 @@ public class PortfolioManagerImpl implements PortfolioManager {
   }
 
 
+
+
+
+
   private Comparator<AnnualizedReturn> getComparator() {
     return Comparator.comparing(AnnualizedReturn::getAnnualizedReturn).reversed();
   }
@@ -121,10 +125,13 @@ public class PortfolioManagerImpl implements PortfolioManager {
   }
 
   protected String buildUri(String symbol, LocalDate startDate, LocalDate endDate) {
-      String uriTemplate = "https:api.tiingo.com/tiingo/daily/$SYMBOL/prices?"
+      String uriTemplate = "https://api.tiingo.com/tiingo/daily/$SYMBOL/prices?"
             + "startDate=$STARTDATE&endDate=$ENDDATE&token=$APIKEY";
       String url = uriTemplate.replace("$APIKEY",TOKEN).replace("$STARTDATE",startDate.toString())
       .replace("$ENDDATE",endDate.toString()).replace("$SYMBOL",symbol);
       return url;
   }
+
+
+
 }
